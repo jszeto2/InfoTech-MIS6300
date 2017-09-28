@@ -2,24 +2,28 @@ use AdventureWorksDW2012;
 
 
 /*1, Display number of orders and total sales amount(sum of SalesAmount) of Internet Sales in 1st quarter each year in each country. Note: your result set should produce a total of 18 rows. */
-Select T1.salesorderID,
-		T1.TotalDue,
-		T1.Onlineorderflag,
-		T1.OrderDate,
-		T2.Countryregioncode
-From Sales.SalesOrderHeader as T1
-	join Sales.salesterritory as T2
-		on T1.TerritoryID = T2.TerritoryID
-		Where OnlineOrderFlag = 1
 
-
-
-
-
-
+use AdventureWorksDW2012;
+select count(T1.salesordernumber) as 'Total Orders',
+		sum(T1.salesamount) as 'Total Sales',
+		T2.calendarquarter as 'Quarter',
+		T2.calendaryear as 'Year',
+		T3.CountryRegionCode as 'Country'
+from dbo.FactInternetSales as T1
+	join dbo.DimDate as T2
+	on T1.OrderDateKey = T2.DateKey
+	join dbo.DimGeography as T3
+	on T1.Salesterritorykey = T3.Salesterritorykey
+	where (T2.calendarquarter) = 1
+	group by (T2.CalendarYear), (T2.calendarquarter), (T3.CountryRegionCode)
+	
 
 /*2, Show total reseller sales amount (sum of SalesAmount), calendar quarter of order date, product category name and reseller’s business type by quarter by category and by business type in 2006. Note: your result set should produce a total of 44 rows. */
 
+use AdventureWorksDW2012;
+select ProductCategoryKey,
+		EnglishProductCategoryName
+from dbo.Dimproductcategory
 
 
 
