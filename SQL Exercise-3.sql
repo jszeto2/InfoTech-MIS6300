@@ -25,6 +25,9 @@ select ProductCategoryKey,
 		EnglishProductCategoryName
 from dbo.Dimproductcategory
 
+use AdventureWorksDW2012;
+Select salesamount
+From dbo.FactResellerSales
 
 
 
