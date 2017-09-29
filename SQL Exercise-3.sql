@@ -11,20 +11,41 @@ select count(T1.salesordernumber) as 'Total Orders',
 		T3.CountryRegionCode as 'Country'
 from dbo.FactInternetSales as T1
 	join dbo.DimDate as T2
-	on T1.OrderDateKey = T2.DateKey
+		on T1.OrderDateKey = T2.DateKey
 	join dbo.DimGeography as T3
-	on T1.Salesterritorykey = T3.Salesterritorykey
+		on T1.Salesterritorykey = T3.Salesterritorykey
 	where (T2.calendarquarter) = 1
 	group by (T2.CalendarYear), (T2.calendarquarter), (T3.CountryRegionCode)
 	
 
-/*2, Show total reseller sales amount (sum of SalesAmount), calendar quarter of order date, product category name and reseller’s business type by quarter by category and by business type in 2006. Note: your result set should produce a total of 44 rows. */
+/*2, Show total reseller sales amount (sum of SalesAmount), X
+calendar quarter of order date, X
+product category name X
+and reseller’s business type 
+by quarter by category and by business type in 2006. Note: your result set should produce a total of 44 rows. */
 
 use AdventureWorksDW2012;
-select ProductCategoryKey,
-		EnglishProductCategoryName
+select EnglishProductCategoryName
 from dbo.Dimproductcategory
+Dimproduct
+dimproductsubcategory
 
+select sum(T1.Salesamount),
+		T2.CalendarYear,
+		T2.calendarquarter,
+		T3.BusinessType,
+		T4.EnglishProductcategoryname
+from dbo.FactResellerSales as T1
+	join dbo.dimdate as T2
+		on T1.OrderDateKey = T2.DateKey
+	join dbo.dimreseller as T3
+		on T1.Resellerkey = T3.Resellerkey
+	Join dbo.FactSurveyResponse as T4
+		on T2.DateKey = T4.datekey
+	Where (T2.calendaryear) = 2006
+	Group by (T2.calendaryear), (T2.calendarquarter), (T3.BusinessType), (T4.EnglishProductCategoryName)
+
+	
 
 
 
