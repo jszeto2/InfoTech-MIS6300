@@ -45,16 +45,6 @@ from dbo.FactResellerSales as T1
 	Where (T2.calendaryear) = 2006
 	Group by (T2.calendaryear), (T2.calendarquarter), (T3.BusinessType), (T4.EnglishProductCategoryName)
 
-<<<<<<< HEAD
-	
-=======
-use AdventureWorksDW2012;
-Select salesamount
-From dbo.FactResellerSales
->>>>>>> f9b3b96fe02aed7b88b68fe2e950ac32da94a7ad
-
-
-
 
 /*3, Based on 2, perform an OLAP operation: slice. In comment, describe how you perform the slicing, i.e. what do you do to what dimension(s)? Why is it a operation of slicing?*/
 
