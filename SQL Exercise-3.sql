@@ -25,25 +25,24 @@ and reseller’s business type
 by quarter by category and by business type in 2006. Note: your result set should produce a total of 44 rows. */
 
 use AdventureWorksDW2012;
-select EnglishProductCategoryName
-from dbo.Dimproductcategory
-Dimproduct
-dimproductsubcategory
-
-select sum(T1.Salesamount),
-		T2.CalendarYear,
-		T2.calendarquarter,
+select sum(T1.Salesamount) as 'Sales',
+		T2.CalendarYear as 'Year',
+		T2.calendarquarter as 'Quarter',
 		T3.BusinessType,
-		T4.EnglishProductcategoryname
+		T6.EnglishProductCategoryName as 'Product Name'
 from dbo.FactResellerSales as T1
 	join dbo.dimdate as T2
 		on T1.OrderDateKey = T2.DateKey
 	join dbo.dimreseller as T3
 		on T1.Resellerkey = T3.Resellerkey
-	Join dbo.FactSurveyResponse as T4
-		on T2.DateKey = T4.datekey
+	Join dbo.DimProduct as T4
+		on T1.Productkey = T4.Productkey
+	Join dbo.DimProductSubcategory as T5
+		on T4.Productsubcategorykey = T5.Productsubcategorykey
+	Join dbo.Dimproductcategory as T6
+		on T5.Productcategorykey = T6.Productcategorykey
 	Where (T2.calendaryear) = 2006
-	Group by (T2.calendaryear), (T2.calendarquarter), (T3.BusinessType), (T4.EnglishProductCategoryName)
+	Group by (T2.calendaryear), (T2.calendarquarter), (T3.BusinessType), (T6.EnglishProductCategoryName)
 
 
 /*3, Based on 2, perform an OLAP operation: slice. In comment, describe how you perform the slicing, i.e. what do you do to what dimension(s)? Why is it a operation of slicing?*/
